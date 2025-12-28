@@ -1,16 +1,17 @@
 
 import React from 'react';
 import { Bell, ShieldCheck, LogOut } from 'lucide-react';
-import { NAV_ITEMS, MOCK_PROFILE } from '../constants';
-import { ViewState } from '../types';
+import { NAV_ITEMS } from '../constants';
+import { ViewState, Profile } from '../types';
 
 interface LayoutProps {
   children: React.ReactNode;
   activeView: ViewState;
   onViewChange: (view: ViewState) => void;
+  profile: Profile;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children, activeView, onViewChange }) => {
+export const Layout: React.FC<LayoutProps> = ({ children, activeView, onViewChange, profile }) => {
   // If we're in auth view, don't wrap with layout
   if (activeView === 'auth') {
     return <>{children}</>;
@@ -71,7 +72,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeView, onViewChan
             className="w-8 h-8 rounded-full bg-ajo-green text-white flex items-center justify-center font-bold text-xs cursor-pointer"
             onClick={() => onViewChange('profile')}
           >
-            {MOCK_PROFILE.first_name[0]}{MOCK_PROFILE.last_name[0]}
+            {profile.first_name[0]}{profile.last_name[0]}
           </div>
         </div>
       </header>
@@ -88,11 +89,11 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeView, onViewChan
             </button>
             <div className="flex items-center gap-3 cursor-pointer" onClick={() => onViewChange('profile')}>
               <div className="text-right">
-                <p className="text-sm font-semibold text-gray-900 leading-none">{MOCK_PROFILE.first_name} {MOCK_PROFILE.last_name}</p>
-                <p className="text-xs text-gray-500">Tier 2 Verified</p>
+                <p className="text-sm font-semibold text-gray-900 leading-none">{profile.first_name} {profile.last_name}</p>
+                <p className="text-xs text-gray-500">{profile.is_bvn_verified ? 'Tier 2 Verified' : 'Tier 1 Starter'}</p>
               </div>
               <div className="w-10 h-10 rounded-full bg-ajo-green text-white flex items-center justify-center font-bold">
-                {MOCK_PROFILE.first_name[0]}{MOCK_PROFILE.last_name[0]}
+                {profile.first_name[0]}{profile.last_name[0]}
               </div>
             </div>
           </div>

@@ -2,9 +2,9 @@
 import React from 'react';
 import { Wallet, ArrowUpCircle, Calendar, Plus, Users, ShieldCheck } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { MOCK_PROFILE, MOCK_GROUPS, MOCK_PAYMENTS } from '../constants';
+import { MOCK_GROUPS, MOCK_PAYMENTS } from '../constants';
 import { TrustScoreBadge } from './TrustScoreBadge';
-import { ViewState } from '../types';
+import { ViewState, Profile } from '../types';
 
 const chartData = [
   { month: 'Jan', amount: 50000 },
@@ -16,14 +16,15 @@ const chartData = [
 
 interface DashboardViewProps {
   onViewChange: (view: ViewState) => void;
+  profile: Profile;
 }
 
-export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) => {
+export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange, profile }) => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Welcome, {MOCK_PROFILE.first_name}! 👋</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Welcome, {profile.first_name}! 👋</h2>
           <p className="text-gray-500">Here's what's happening with your savings today.</p>
         </div>
         <div className="flex gap-2 w-full md:w-auto">
@@ -73,8 +74,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
           </div>
           <p className="text-gray-500 text-sm font-medium">Trust Score</p>
           <div className="flex items-center gap-2 mt-1">
-            <p className="text-2xl font-bold text-gray-900">{MOCK_PROFILE.trust_score}</p>
-            <TrustScoreBadge score={MOCK_PROFILE.trust_score} size="sm" />
+            <p className="text-2xl font-bold text-gray-900">{profile.trust_score}</p>
+            <TrustScoreBadge score={profile.trust_score} size="sm" />
           </div>
         </div>
 
@@ -91,7 +92,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 min-h-[400px]">
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-bold text-gray-800">Savings Growth</h3>
             <select className="bg-gray-50 border-none text-xs font-semibold rounded-lg px-2 py-1 focus:ring-0">
@@ -101,7 +102,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData}>
+              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#00A86B" stopOpacity={0.3}/>
@@ -109,10 +110,21 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onViewChange }) =>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fontSize: 12, fill: '#999'}} />
+                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#999'}} />
                 <YAxis hide />
-                <Tooltip />
-                <Area type="monotone" dataKey="amount" stroke="#00A86B" strokeWidth={3} fillOpacity={1} fill="url(#colorAmount)" />
+                <Tooltip 
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                  labelStyle={{ fontWeight: 'bold', marginBottom: '4px' }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="amount" 
+                  stroke="#00A86B" 
+                  strokeWidth={3} 
+                  fillOpacity={1} 
+                  fill="url(#colorAmount)" 
+                  animationDuration={1500}
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>

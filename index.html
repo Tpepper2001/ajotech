@@ -13,7 +13,7 @@
         "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
         "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
         "lucide-react": "https://esm.sh/lucide-react@0.344.0?external=react",
-        "recharts": "https://esm.sh/recharts@2.12.7?external=react"
+        "recharts": "https://esm.sh/recharts@2.12.7?external=react,react-dom"
       }
     }
   </script>
@@ -27,6 +27,10 @@
     .ajo-green { color: #00A86B; }
     .bg-ajo-green { background-color: #00A86B; }
     .border-ajo-green { border-color: #00A86B; }
+    /* Prevent layout shift during chart load */
+    .recharts-responsive-container {
+      min-height: 256px;
+    }
   </style>
 </head>
 <body>

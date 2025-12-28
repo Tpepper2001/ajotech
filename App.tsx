@@ -29,7 +29,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     switch (activeView) {
       case 'dashboard':
-        return <DashboardView onViewChange={setActiveView} />;
+        return <DashboardView onViewChange={setActiveView} profile={userProfile} />;
       case 'groups':
         return <GroupListView onSelectGroup={handleGroupSelect} onViewChange={setActiveView} />;
       case 'group-detail':
@@ -47,12 +47,12 @@ const App: React.FC = () => {
       case 'auth':
         return <AuthView onLogin={() => setActiveView('dashboard')} />;
       default:
-        return <DashboardView onViewChange={setActiveView} />;
+        return <DashboardView onViewChange={setActiveView} profile={userProfile} />;
     }
   };
 
   return (
-    <Layout activeView={activeView} onViewChange={setActiveView}>
+    <Layout activeView={activeView} onViewChange={setActiveView} profile={userProfile}>
       {renderContent()}
     </Layout>
   );
