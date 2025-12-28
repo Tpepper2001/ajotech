@@ -13,7 +13,7 @@ import { ViewState, Group, Profile } from './types';
 import { MOCK_PROFILE } from './constants';
 
 const App: React.FC = () => {
-  const [activeView, setActiveView] = useState<ViewState>('Auth');
+  const [activeView, setActiveView] = useState<ViewState>('auth');
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
   const [userProfile, setUserProfile] = useState<Profile>(MOCK_PROFILE);
 
