@@ -1,0 +1,7 @@
+{
+  "name": "Ajo Digital MVP",
+  "description": "A digitize platform for Nigeria's informal savings groups (ajo/esusu) featuring automated cycles, trust scoring, and Paystack-integrated contribution management.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
